@@ -94,8 +94,12 @@ const App: React.FC = () => {
     if (gameState !== GameState.PLAYING) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Swapped lane logic to invert 'Left' and 'Right' as per request
+      // A/Left Arrow -> now decrements lane
+      // D/Right Arrow -> now increments lane
       if (e.key === 'a' || e.key === 'ArrowLeft') setLane(prev => Math.max(-1, prev - 1));
       if (e.key === 'd' || e.key === 'ArrowRight') setLane(prev => Math.min(1, prev + 1));
+      
       if (e.key === 'w' || e.key === 'ArrowUp') {
         if (!isJumping) {
             setIsJumping(true);
@@ -195,10 +199,10 @@ const App: React.FC = () => {
   return (
     <div className="w-full h-full relative overflow-hidden bg-black">
       <Canvas shadows>
+        {/* Camera looking at positive Z (rotated PI around Y) */}
         <PerspectiveCamera makeDefault position={[0, 5, -8]} rotation={[-0.2, Math.PI, 0]} fov={75} />
         
         <ambientLight intensity={0.4} color={COLORS.GOLDEN_HOUR} />
-        {/* Adjusted for better shadows */}
         <directionalLight 
           position={[15, 8, 20]} 
           intensity={2} 
