@@ -95,10 +95,10 @@ const App: React.FC = () => {
 
     const handleKeyDown = (e: KeyboardEvent) => {
       // Swapped lane logic to invert 'Left' and 'Right' as per request
-      // A/Left Arrow -> now decrements lane
-      // D/Right Arrow -> now increments lane
-      if (e.key === 'a' || e.key === 'ArrowLeft') setLane(prev => Math.max(-1, prev - 1));
-      if (e.key === 'd' || e.key === 'ArrowRight') setLane(prev => Math.min(1, prev + 1));
+      // A/Left Arrow -> now increments lane (moves towards world X+)
+      // D/Right Arrow -> now decrements lane (moves towards world X-)
+      if (e.key === 'a' || e.key === 'ArrowLeft') setLane(prev => Math.min(1, prev + 1));
+      if (e.key === 'd' || e.key === 'ArrowRight') setLane(prev => Math.max(-1, prev - 1));
       
       if (e.key === 'w' || e.key === 'ArrowUp') {
         if (!isJumping) {
